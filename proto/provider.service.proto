@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package gamehub.proto.manager.service;
+
+// gRPC Service
+service Provider
+{
+    rpc Create (ProviderCreateRequest) returns (ProviderUpdateResponse);
+
+    rpc Update (ProviderUpdateRequest) returns (ProviderUpdateResponse);
+
+    rpc UpdateImage (ProviderUpdateImageRequest) returns (ProviderUpdateResponse);
+
+    rpc Info (ProviderInfoRequest) returns (ProviderDetailsResponse);
+
+    rpc List (ProviderListRequest) returns (ProviderListResponse);
+}
+
+message ProviderCreateRequest {
+    string identity = 1;
+
+    string name = 2;
+
+    bool active = 3;
+}
+
+message ProviderUpdateRequest {
+    string id = 1;
+
+    optional string name = 2;
+
+    optional bool active = 3;
+}
+
+message ProviderUpdateImageRequest {
+    string id = 1;
+    ImageChunk data = 2;
+
+    message ImageChunk
+    {
+        string key = 1;
+        bytes content = 2;
+    }
+}
+
+message ProviderInfoRequest {
+    string id = 1;
+}
+
+message ProviderListRequest {
+    int32 offset = 1;
+
+    int32 limit = 2;
+
+    optional string identity = 3;
+
+    optional string name = 4;
+
+    optional bool active = 5;
+
+    optional string query = 6;
+}
+
+message ProviderUpdateResponse {
+    string id = 1;
+}
+
+message ProviderDetailsResponse {
+    string id = 1;
+
+    string identity = 2;
+
+    string name = 3;
+
+    map<string, string> images = 4;
+
+    bool active = 5;
+
+    int32 game_count = 6;
+}
+
+message ProviderListResponse {
+    sint32 total_items = 1;
+
+    repeated ProviderDetailsResponse items = 2;
+}

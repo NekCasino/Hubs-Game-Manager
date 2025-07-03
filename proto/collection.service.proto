@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package gamehub.proto.manager.service;
+
+// gRPC Service
+service Collection
+{
+    rpc Create (CollectionCreateRequest) returns (CollectionUpdateResponse);
+
+    rpc Update (CollectionUpdateRequest) returns (CollectionUpdateResponse);
+
+    rpc UpdateImage (CollectionUpdateImageRequest) returns (CollectionUpdateResponse);
+
+    rpc Info (CollectionInfoRequest) returns (CollectionDetailsResponse);
+
+    rpc List (CollectionListRequest) returns (CollectionListResponse);
+}
+
+message CollectionCreateRequest {
+    string identity = 1;
+
+    string name = 2;
+
+    int32 sort = 3;
+
+    bool active = 4;
+}
+
+message CollectionUpdateRequest {
+    string id = 1;
+
+    optional string name = 2;
+
+    optional int32 sort = 3;
+
+    optional bool active = 4;
+}
+
+message CollectionUpdateImageRequest {
+    string id = 1;
+    ImageChunk data = 2;
+
+    message ImageChunk
+    {
+        string key = 1;
+        bytes content = 2;
+    }
+}
+
+message CollectionInfoRequest {
+    string id = 1;
+}
+
+message CollectionListRequest {
+    int32 offset = 1;
+
+    int32 limit = 2;
+
+    optional string identity = 3;
+
+    optional string name = 4;
+
+    optional bool active = 5;
+
+    optional string query = 6;
+}
+
+message CollectionUpdateResponse {
+    string id = 1;
+}
+
+message CollectionDetailsResponse {
+    string id = 1;
+
+    string identity = 2;
+
+    string name = 3;
+
+    map<string, string> images = 4;
+
+    int32 sort = 5;
+
+    bool active = 6;
+
+    int32 game_count = 7;
+}
+
+message CollectionListResponse {
+    sint32 total_items = 1;
+
+    repeated CollectionDetailsResponse items = 2;
+}

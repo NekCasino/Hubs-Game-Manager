@@ -1,0 +1,13 @@
+# JetBrains IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.idea_modules/
+out/
+
+/generated/
+/cmake-build-debug/
+/node_modules/
+
+/dist

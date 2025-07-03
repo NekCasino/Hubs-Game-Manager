@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package gamehub.proto.manager.service;
+
+// gRPC Service
+service GameVariant
+{
+  rpc Update (GameVariantUpdateRequest) returns (GameVariantUpdateResponse);
+
+  rpc Info (GameVariantInfoRequest) returns (GameVariantDetailsResponse);
+
+  rpc List (GameVariantListRequest) returns (GameVariantListResponse);
+}
+
+message GameVariantUpdateRequest {
+    string id = 1;
+
+    string game_id = 2;
+}
+
+message GameVariantUpdateResponse {
+  string id = 1;
+}
+
+message GameVariantInfoRequest {
+  string id = 1;
+}
+
+message GameVariantDetailsResponse {
+  string id = 1;
+
+  string identity = 2;
+
+  string external_id = 3;
+
+  string name = 4;
+
+  string integration_type = 5;
+
+  repeated string supported_lang = 6;
+
+  repeated string platforms = 7;
+
+  optional string game_identity = 8;
+
+  bool demo_enable = 9;
+
+  bool freespin_enable = 10;
+
+  bool freechip_enable = 11;
+
+  bool jackpot_enable = 12;
+
+  bool bonus_buy_enable = 13;
+}
+
+message GameVariantListRequest {
+  int32 offset = 1;
+
+  int32 limit = 2;
+
+  optional string id = 3;
+
+  optional string identity = 4;
+
+  optional string external_id = 5;
+
+  optional string name = 6;
+
+  optional string integration_type = 7;
+
+  optional string query = 8;
+}
+
+message GameVariantListResponse {
+    sint32 total_items = 1;
+
+    repeated GameVariantDetailsResponse items = 2;
+}

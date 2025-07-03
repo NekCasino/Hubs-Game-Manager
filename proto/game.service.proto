@@ -1,0 +1,159 @@
+syntax = "proto3";
+
+package gamehub.proto.manager.service;
+
+
+// gRPC Service
+service Game
+{
+  rpc Create (GameCreateRequest) returns (GameUpdateResponse);
+
+  rpc Update (GameUpdateRequest) returns (GameUpdateResponse);
+
+  rpc UpdateImage (GameUpdateImageRequest) returns (GameUpdateResponse);
+
+  rpc AddToCollection (GameUpdateCollectionRequest) returns (GameUpdateResponse);
+
+  rpc RemoveFromCollection (GameUpdateCollectionRequest) returns (GameUpdateResponse);
+
+  rpc Info (GameInfoRequest) returns (GameDetailsResponse);
+
+  rpc List (GameListRequest) returns (GameListResponse);
+}
+
+message GameCreateRequest {
+  string identity = 1;
+
+  string name = 2;
+
+  string provider_id = 3;
+
+  bool bonus_bet = 4;
+
+  bool bonus_wagering = 5;
+
+  int32 sort = 6;
+
+  bool active = 7;
+}
+
+message GameUpdateResponse {
+  string id = 1;
+}
+
+message GameUpdateRequest {
+  string id = 1;
+
+  optional string name = 2;
+
+  optional string provider_id = 3;
+
+  optional bool bonus_bet = 4;
+
+  optional bool bonus_wagering = 5;
+
+  optional int32 sort = 6;
+
+  optional bool active = 7;
+}
+
+message GameUpdateImageRequest {
+  string id = 1;
+  ImageChunk data = 2;
+
+  message ImageChunk
+  {
+    string key = 1;
+    bytes content = 2;
+  }
+}
+
+message GameUpdateCollectionRequest {
+  string id = 1;
+
+  string collection_id = 2;
+}
+
+message GameInfoRequest {
+  string id = 1;
+}
+
+message GameDetailsResponse {
+  string id = 1;
+
+  string identity = 2;
+
+  string name = 3;
+
+  string provider_id = 4;
+
+  bool bonus_bet = 5;
+
+  bool bonus_wagering = 6;
+
+  map<string, string> images = 7;
+
+  int32 sort = 8;
+
+  bool active = 9;
+
+  ProviderDetailsDto provider = 10;
+
+  repeated CollectionDetailsDto collections = 11;
+
+  message ProviderDetailsDto {
+    string id = 1;
+
+    string identity = 2;
+
+    string name = 3;
+
+    map<string, string> images = 4;
+
+    bool active = 5;
+
+    int32 game_count = 6;
+  }
+
+  message CollectionDetailsDto {
+    string id = 1;
+
+    string identity = 2;
+
+    string name = 3;
+
+    map<string, string> images = 4;
+
+    int32 sort = 5;
+
+    bool active = 6;
+  }
+}
+
+message GameListRequest {
+  int32 offset = 1;
+
+  int32 limit = 2;
+
+  optional string name = 3;
+
+  optional string provider_id = 4;
+
+  optional bool bonus_bet = 5;
+
+  optional bool bonus_wagering = 6;
+
+  optional bool active = 7;
+
+  optional string collection_id = 8;
+
+  optional string identity = 9;
+
+  optional string query = 10;
+}
+
+message GameListResponse {
+  sint32 total_items = 1;
+
+  repeated GameDetailsResponse items = 2;
+}

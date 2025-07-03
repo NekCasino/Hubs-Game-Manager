@@ -1,0 +1,17 @@
+[1m======================================================[0m
+[1m[0;32mStarting Proto Generation Process[0m
+[1m======================================================[0m
+[0;34mOutput directory:[0m src
+[0;34mLog file:[0m proto_logs/proto_generation_20250513_142029.log
+[0;36mCreating output directory if it doesn't exist...[0m
+[0;34mSearching for .proto files in proto directory...[0m
+[0;32mFound        4 .proto file(s):[0m
+033[0;36m   - 033[0mproto/game_variant.service.proto
+033[0;36m   - 033[0mproto/collection.service.proto
+033[0;36m   - 033[0mproto/game.service.proto
+033[0;36m   - 033[0mproto/provider.service.proto
+[1m======================================================[0m
+[1m[0;33mGenerating gRPC-Web TypeScript code...[0m
+[1m======================================================[0m
+[1m[0;33mExecuting: gRPC-Web TypeScript Generation[0m
+[0;35mCommand: [0mprotoc -I=proto proto/*.proto --grpc-web_out=import_style=typescript,mode=grpcwebtext:src

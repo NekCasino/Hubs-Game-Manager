@@ -1,0 +1,23 @@
+{
+  "name": "@platform/gamehub-manager",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "src"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "grpc-web": "^1.4.2"
+  },
+  "scripts": {
+    "generate": "./generate.sh",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
