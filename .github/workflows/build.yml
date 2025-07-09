@@ -1,0 +1,48 @@
+name: Node.js Package
+on:
+  push:
+    branches: [ "main"]
+
+env:
+  NODE_VERSION: '18.x'
+
+jobs:
+  publish-gpr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl protobuf-compiler
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://npm.pkg.github.com/
+          cache: 'npm'
+
+      - name: Install gRPC tools
+        run: |
+          npm install -g protoc-gen-grpc-web
+          npm install -g google-protobuf
+          npm install -g protobufjs protobufjs-cli
+          npm install -g typescript
+
+      - name: Generate protobuf files
+        run: |
+          chmod +x generate.sh
+          bash generate.sh
+
+      - name: Install dependencies and publish
+        run: |
+          npm ci
+          npm run build  # Add build step if needed
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
