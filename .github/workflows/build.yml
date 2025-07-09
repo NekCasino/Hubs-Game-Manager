@@ -27,6 +27,11 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           cache: 'npm'
 
+      - name: Configure npm for GitHub Packages
+        run: |
+          echo "@platform:registry=https://npm.pkg.github.com/" > .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
+
       - name: Install gRPC tools
         run: |
           npm install -g protoc-gen-grpc-web
@@ -42,7 +47,7 @@ jobs:
       - name: Install dependencies and publish
         run: |
           npm ci
-          npm run build  # Add build step if needed
+          npm run build
           npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
