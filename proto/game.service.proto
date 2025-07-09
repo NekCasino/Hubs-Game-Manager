@@ -10,7 +10,7 @@ service Game
 
   rpc Update (GameUpdateRequest) returns (GameUpdateResponse);
 
-  rpc UpdateImage (GameUpdateImageRequest) returns (GameUpdateResponse);
+  rpc UpdateImages (GameUpdateImagesRequest) returns (GameUpdateResponse);
 
   rpc AddToCollection (GameUpdateCollectionRequest) returns (GameUpdateResponse);
 
@@ -57,9 +57,10 @@ message GameUpdateRequest {
   optional bool active = 7;
 }
 
-message GameUpdateImageRequest {
+message GameUpdateImagesRequest {
   string id = 1;
-  ImageChunk data = 2;
+
+  repeated ImageChunk data = 2;
 
   message ImageChunk
   {

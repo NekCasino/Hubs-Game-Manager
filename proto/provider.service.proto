@@ -9,7 +9,7 @@ service Provider
 
     rpc Update (ProviderUpdateRequest) returns (ProviderUpdateResponse);
 
-    rpc UpdateImage (ProviderUpdateImageRequest) returns (ProviderUpdateResponse);
+    rpc UpdateImages (ProviderUpdateImagesRequest) returns (ProviderUpdateResponse);
 
     rpc Info (ProviderInfoRequest) returns (ProviderDetailsResponse);
 
@@ -32,9 +32,10 @@ message ProviderUpdateRequest {
     optional bool active = 3;
 }
 
-message ProviderUpdateImageRequest {
+message ProviderUpdateImagesRequest {
     string id = 1;
-    ImageChunk data = 2;
+
+    repeated ImageChunk data = 2;
 
     message ImageChunk
     {

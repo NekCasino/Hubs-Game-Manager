@@ -9,7 +9,7 @@ service Collection
 
     rpc Update (CollectionUpdateRequest) returns (CollectionUpdateResponse);
 
-    rpc UpdateImage (CollectionUpdateImageRequest) returns (CollectionUpdateResponse);
+    rpc UpdateImages (CollectionUpdateImagesRequest) returns (CollectionUpdateResponse);
 
     rpc Info (CollectionInfoRequest) returns (CollectionDetailsResponse);
 
@@ -36,9 +36,10 @@ message CollectionUpdateRequest {
     optional bool active = 4;
 }
 
-message CollectionUpdateImageRequest {
+message CollectionUpdateImagesRequest {
     string id = 1;
-    ImageChunk data = 2;
+
+    repeated ImageChunk data = 2;
 
     message ImageChunk
     {
