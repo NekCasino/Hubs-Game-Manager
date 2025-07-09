@@ -1,3 +1,4 @@
+
 name: Node.js Package
 on:
   push:
@@ -29,7 +30,7 @@ jobs:
 
       - name: Configure npm for GitHub Packages
         run: |
-          echo "@platform:registry=https://npm.pkg.github.com/" > .npmrc
+          echo "@${GITHUB_REPOSITORY_OWNER,,}:registry=https://npm.pkg.github.com/" > .npmrc
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
 
       - name: Install gRPC tools
@@ -43,6 +44,12 @@ jobs:
         run: |
           chmod +x generate.sh
           bash generate.sh
+
+      - name: Update package name for GitHub Packages
+        run: |
+          REPO_NAME=$(echo "${GITHUB_REPOSITORY##*/}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9-]/-/g')
+          npm pkg set name="@${GITHUB_REPOSITORY_OWNER,,}/${REPO_NAME}"
+          npm pkg set publishConfig.registry="https://npm.pkg.github.com/"
 
       - name: Install dependencies and publish
         run: |
