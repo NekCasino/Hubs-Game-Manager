@@ -1,8 +1,9 @@
-
 name: Node.js Package
 on:
   push:
-    branches: [ "main"]
+    tags:
+      - 'v*.*.*'        # Matches v1.0.0, v2.1.3, etc.
+      - '*.*.*'         # Matches 1.0.0, 2.1.3, etc.
 
 env:
   NODE_VERSION: '18.x'
@@ -45,10 +46,19 @@ jobs:
           chmod +x generate.sh
           bash generate.sh
 
-      - name: Update package name for GitHub Packages
+      - name: Extract version from tag
+        id: version
+        run: |
+          # Remove 'v' prefix if present (v1.0.0 -> 1.0.0)
+          VERSION=${GITHUB_REF_NAME#v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Publishing version: $VERSION"
+
+      - name: Update package name and version for GitHub Packages
         run: |
           REPO_NAME=$(echo "${GITHUB_REPOSITORY##*/}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9-]/-/g')
           npm pkg set name="@${GITHUB_REPOSITORY_OWNER,,}/${REPO_NAME}"
+          npm pkg set version="${{ steps.version.outputs.version }}"
           npm pkg set publishConfig.registry="https://npm.pkg.github.com/"
 
       - name: Install dependencies and publish
