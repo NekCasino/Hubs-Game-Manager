@@ -28,13 +28,7 @@ message GameCreateRequest {
 
   string provider_id = 3;
 
-  bool bonus_bet = 4;
-
-  bool bonus_wagering = 5;
-
-  int32 sort = 6;
-
-  bool active = 7;
+  bool active = 4;
 }
 
 message GameUpdateResponse {
@@ -48,13 +42,7 @@ message GameUpdateRequest {
 
   optional string provider_id = 3;
 
-  optional bool bonus_bet = 4;
-
-  optional bool bonus_wagering = 5;
-
-  optional int32 sort = 6;
-
-  optional bool active = 7;
+  optional bool active = 4;
 }
 
 message GameUpdateImagesRequest {
@@ -88,19 +76,13 @@ message GameDetailsResponse {
 
   string provider_id = 4;
 
-  bool bonus_bet = 5;
+  map<string, string> images = 6;
 
-  bool bonus_wagering = 6;
+  bool active = 7;
 
-  map<string, string> images = 7;
+  ProviderDetailsDto provider = 8;
 
-  int32 sort = 8;
-
-  bool active = 9;
-
-  ProviderDetailsDto provider = 10;
-
-  repeated CollectionDetailsDto collections = 11;
+  repeated CollectionDetailsDto collections = 9;
 
   message ProviderDetailsDto {
     string id = 1;
@@ -140,17 +122,9 @@ message GameListRequest {
 
   optional string provider_id = 4;
 
-  optional bool bonus_bet = 5;
+  optional bool active = 5;
 
-  optional bool bonus_wagering = 6;
-
-  optional bool active = 7;
-
-  optional string collection_id = 8;
-
-  optional string identity = 9;
-
-  optional string query = 10;
+  optional string query = 6;
 }
 
 message GameListResponse {
