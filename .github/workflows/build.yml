@@ -43,6 +43,7 @@ jobs:
 
       - name: Generate protobuf files
         run: |
+          mkdir src
           npx protoc -I=proto \
           $(find proto -name "*.proto") \
           --experimental_allow_proto3_optional \
