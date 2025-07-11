@@ -43,8 +43,11 @@ jobs:
 
       - name: Generate protobuf files
         run: |
-          chmod +x generate.sh
-          bash generate.sh
+          npx protoc -I=proto \
+          $(find proto -name "*.proto") \
+          --experimental_allow_proto3_optional \
+          --js_out=import_style=commonjs,binary:src \
+          --grpc-web_out=import_style=typescript,mode=grpcwebtext:src
 
       - name: Extract version from tag
         id: version
