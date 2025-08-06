@@ -1,0 +1,148 @@
+syntax = "proto3";
+
+package gamehub.proto.manager.service;
+
+// gRPC Service
+// Customer service provides operations for managing customer data and provider mappings
+service Customer {
+  // Updates customer information
+  rpc Update(CustomerUpdateRequest) returns (CustomerUpdateResponse);
+
+  // Retrieves customer information
+  rpc Info(CustomerInfoRequest) returns (CustomerInfoResponse);
+
+  // Lists customers based on filters
+  rpc List(CustomerListRequest) returns (CustomerListResponse);
+
+  // Adds a new provider mapping
+  rpc ProviderMapperAdd(ProviderMapperAddRequest) returns (ProviderMapperAddResponse);
+
+  // Updates existing provider mapping
+  rpc ProviderMapperUpdate(ProviderMapperUpdateRequest) returns (ProviderMapperUpdateResponse);
+
+  // Retrieves provider mapping information
+  rpc ProviderMapperInfo(ProviderMapperInfoRequest) returns (ProviderMapperInfoResponse);
+
+  // Lists provider mappings based on filters
+  rpc ProviderMapperList(ProviderMapperListRequest) returns (ProviderMapperListResponse);
+}
+
+message CustomerUpdateRequest
+{
+  string id = 1;
+  optional bool active = 2;
+  optional string identity = 3;
+  optional string secret = 4;
+  optional string address = 5;
+}
+
+message CustomerUpdateResponse
+{
+  string id = 1;
+}
+
+message CustomerInfoRequest
+{
+  string id = 1;
+}
+
+message CustomerInfoResponse
+{
+  string id = 1;
+  bool active = 2;
+  string identity = 3;
+  string address = 4;
+}
+
+message CustomerListRequest
+{
+  int32 offset = 1;
+  int32 limit = 2;
+  optional bool active = 3;
+  optional string identity = 4;
+  optional string address = 5;
+  optional string query = 6;
+}
+
+message CustomerListResponse
+{
+  sint32 total_items = 1;
+
+  repeated CustomerInfoResponse items = 2;
+}
+
+message ProviderMapperAddRequest
+{
+  string customer_id = 1;
+  string integration_id = 2;
+  string provider_id = 3;
+}
+
+message ProviderMapperAddResponse
+{
+  string id = 1;
+}
+
+message ProviderMapperUpdateRequest
+{
+  string id = 1;
+  string customer_id = 2;
+  string integration_id = 3;
+  string provider_id = 4;
+}
+
+message ProviderMapperUpdateResponse
+{
+  string id = 1;
+}
+
+message ProviderMapperInfoRequest
+{
+  string id = 1;
+}
+
+message ProviderMapperInfoResponse
+{
+  string id = 1;
+  CustomerInfoResponse customer = 2;
+  IntegrationInfoResponse integration = 3;
+  ProviderInfoResponse provider = 4;
+
+  message IntegrationInfoResponse
+  {
+    string id = 1;
+    bool active = 2;
+    int32 type = 3;
+    string identity = 4;
+    string customer_id = 5;
+    string configuration = 6;
+  }
+
+  message ProviderInfoResponse
+  {
+    string id = 1;
+    bool active = 2;
+    string identity = 3;
+    string name = 4;
+    map<string, string> images = 5;
+    int32 game_count = 6;
+  }
+}
+
+message ProviderMapperListRequest
+{
+  int32 offset = 1;
+  int32 limit = 2;
+  optional string customer_id = 3;
+  optional string integration_id = 4;
+  optional string provider_id = 5;
+  optional string query = 6;
+}
+
+message ProviderMapperListResponse
+{
+  sint32 total_items = 1;
+
+  repeated ProviderMapperInfoResponse items = 2;
+}
+
