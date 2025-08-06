@@ -108,26 +108,6 @@ message ProviderMapperInfoResponse
   CustomerInfoResponse customer = 2;
   IntegrationInfoResponse integration = 3;
   ProviderInfoResponse provider = 4;
-
-  message IntegrationInfoResponse
-  {
-    string id = 1;
-    bool active = 2;
-    int32 type = 3;
-    string identity = 4;
-    string customer_id = 5;
-    string configuration = 6;
-  }
-
-  message ProviderInfoResponse
-  {
-    string id = 1;
-    bool active = 2;
-    string identity = 3;
-    string name = 4;
-    map<string, string> images = 5;
-    int32 game_count = 6;
-  }
 }
 
 message ProviderMapperListRequest
@@ -147,3 +127,22 @@ message ProviderMapperListResponse
   repeated ProviderMapperInfoResponse items = 2;
 }
 
+message IntegrationInfoResponse
+{
+  string id = 1;
+  bool active = 2;
+  int32 type = 3;
+  string identity = 4;
+  string customer_id = 5;
+  string configuration = 6;
+}
+
+message ProviderInfoResponse
+{
+  string id = 1;
+  bool active = 2;
+  string identity = 3;
+  string name = 4;
+  map<string, string> images = 5;
+  int32 game_count = 6;
+}
