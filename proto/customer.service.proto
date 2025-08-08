@@ -133,7 +133,6 @@ message IntegrationInfoResponse
   bool active = 2;
   int32 type = 3;
   string identity = 4;
-  string customer_id = 5;
   string configuration = 6;
 }
 
